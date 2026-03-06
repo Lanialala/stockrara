@@ -19,6 +19,9 @@ from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
 import yfinance as yf
+from dotenv import load_dotenv
+
+
 
 # ── Telegram ──────────────────────────────────────────────────────────────────
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
@@ -29,7 +32,12 @@ from telegram.ext import (
 from telegram.constants import ParseMode
 
 # ── Bot Token ─────────────────────────────────────────────────────────────────
-TOKEN = "8485630829:AAGSfYXD9Sa4lyLJtvekVCRPmSQR9Wzic4M"   # ← ganti dengan token dari @BotFather
+#TOKEN = "ganti ini"   # ← ganti dengan token dari @BotFather
+# Mengambil data dari file .env
+load_dotenv()
+TOKEN = os.getenv('TELEGRAM_TOKEN')
+
+
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -850,5 +858,13 @@ def main():
     app.run_polling(drop_pending_updates=True)
 
 
-if __name__ == "__main__":
-    main()
+# Gunakan variabel TOKEN untuk menjalankan bot (Cara yang Benar)
+if __name__ == '__main__':
+    # Inisialisasi aplikasi
+    application = Application.builder().token(TOKEN).build()
+    
+    # Tambahkan handler kamu di sini (contoh: CommandHandler)
+    # application.add_handler(CommandHandler("start", start_function))
+    
+    # Jalankan bot
+    application.run_polling()
